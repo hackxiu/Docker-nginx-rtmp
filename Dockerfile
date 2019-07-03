@@ -46,7 +46,7 @@ RUN	cd /tmp										&&  \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
 		--add-module=../nginx-rtmp-module                \
-		--with-debug                                     \
+		#--with-debug                                     \
 		--with-cc-opt="-Wimplicit-fallthrough=0"					&&	\
 	make										&&	\
 	make install
