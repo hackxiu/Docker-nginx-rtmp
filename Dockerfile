@@ -36,16 +36,18 @@ RUN	apk update		&&	\
 
 
 RUN	cd /tmp/									&&	\
-	curl --remote-name https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz			&&	\
+	curl -s --remote-name https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz			&&	\
 	git clone https://github.com/arut/nginx-rtmp-module.git -b v${NGINX_RTMP_VERSION}
 
-RUN	cd /tmp										&&	\
-	tar xzf nginx-${NGINX_VERSION}.tar.gz						&&	\
-	cd nginx-${NGINX_VERSION}							&&	\
-	./configure										\
-		--prefix=/opt/nginx								\
-		--with-http_ssl_module								\
-		--add-module=../nginx-rtmp-module					&&	\
+RUN	cd /tmp										&&  \
+	tar xzf nginx-${NGINX_VERSION}.tar.gz               &&  \
+	cd nginx-${NGINX_VERSION}							&&  \
+	./configure                                          \
+		--prefix=/opt/nginx                              \
+		--with-http_ssl_module                           \
+		--add-module=../nginx-rtmp-module                \
+		--with-debug
+		--with-cc-opt="-Wimplicit-fallthrough=0"					&&	\
 	make										&&	\
 	make install
 
