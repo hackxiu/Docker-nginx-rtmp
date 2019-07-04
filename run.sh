@@ -14,7 +14,7 @@ apply_config() {
 ## Standard config:
 
 cat >${NGINX_CONFIG_FILE} <<!EOF
-worker_processes 1;
+worker_processes auto;
 
 events {
     worker_connections ${RTMP_CONNECTIONS};
