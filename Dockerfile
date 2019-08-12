@@ -1,8 +1,9 @@
 FROM alpine:latest as builder
-MAINTAINER Jason Rivers <docker@jasonrivers.co.uk>
+MAINTAINER HackXiu <hakkxiu@gmail.com>
 
 ARG NGINX_VERSION=1.16.0
 ARG NGINX_RTMP_VERSION=1.2.1
+ARG JEMALLOC_VER=5.2.0
 
 
 RUN	apk update		&&	\
@@ -37,20 +38,21 @@ RUN	apk update		&&	\
 
 RUN	cd /tmp/									&&	\
 	curl -s --remote-name https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz			&&	\
+	curl -s --remote-name https://github.com/jemalloc/jemalloc/releases/download/${JEMALLOC_VER}/jemalloc-${JEMALLOC_VER}.tar.bz2			&&	\
 	git clone https://github.com/arut/nginx-rtmp-module.git -b v${NGINX_RTMP_VERSION}
 
 RUN	cd /tmp										&&  \
 	tar xzf nginx-${NGINX_VERSION}.tar.gz               &&  \
+	tar xjf jemalloc-${JEMALLOC_VER}.tar.bz2               &&  \
 	cd nginx-${NGINX_VERSION}							&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
 		--add-module=../nginx-rtmp-module                \
-		#--with-debug                                     \
-		--with-cc-opt="-Wimplicit-fallthrough=0"					&&	\
+		--with-ld-opt='-ljemalloc'              &&	\
 	make										&&	\
-	make install
-
+	make install                                &&	\
+	cd jemalloc-${JEMALLOC_VER}                 &&	\
 FROM alpine:latest
 RUN apk update		&& \
 	apk add			   \
