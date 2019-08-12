@@ -3,6 +3,8 @@ MAINTAINER HackXiu <hakkxiu@gmail.com>
 
 ARG NGINX_VERSION=1.16.0
 ARG NGINX_RTMP_VERSION=1.2.1
+ARG JEMALLOC_VER=5.2.0
+
 
 RUN	apk update		&&	\
 	apk add				\
@@ -36,6 +38,7 @@ RUN	apk update		&&	\
 
 RUN	cd /tmp/									&&	\
 	curl -s --remote-name https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz			&&	\
+	curl -s --remote-name https://github.com/jemalloc/jemalloc/releases/download/${JEMALLOC_VER}/jemalloc-${JEMALLOC_VER}.tar.bz2			&&	\
 	git clone https://github.com/arut/nginx-rtmp-module.git -b v${NGINX_RTMP_VERSION}
 
 RUN	cd /tmp										&&  \
@@ -45,10 +48,14 @@ RUN	cd /tmp										&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
-		--add-module=../nginx-rtmp-module                &&	\
+		--add-module=../nginx-rtmp-module                \
+		--with-ld-opt='-ljemalloc'                        \
+		#--with-debug                                     \
+		--with-cc-opt="-Wimplicit-fallthrough=0"					&&	\
 	make										&&	\
 	make install                                &&	\
 	cd jemalloc-${JEMALLOC_VER}                 &&	\
+
 FROM alpine:latest
 RUN apk update		&& \
 	apk add			   \
@@ -66,3 +73,4 @@ EXPOSE 1935
 EXPOSE 8080
 
 CMD /run.sh
+
