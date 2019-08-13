@@ -45,7 +45,7 @@ RUN	cd /tmp										&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
-		--add-module=../nginx-rtmp-module                &&	\
+		--add-module=../nginx-rtmp-module                \
 	make										&&	\
 	make install                                &&	\
 	cd jemalloc-${JEMALLOC_VER}                 &&	\
