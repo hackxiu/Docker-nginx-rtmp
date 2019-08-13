@@ -48,8 +48,8 @@ RUN	cd /tmp										&&  \
 		--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
 	make										&&  \
 	make install                                &&  \
-	rm -rf nginx-${NGINX_VERSION}               &&  \
 	cd .. \                                     &&  \
+	rm -rf nginx-${NGINX_VERSION}               &&  \
 	rm -rf nginx-rtmp-module                    
 FROM alpine:latest
 RUN apk update		&& \
