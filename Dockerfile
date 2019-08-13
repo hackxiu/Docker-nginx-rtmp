@@ -40,7 +40,6 @@ RUN	cd /tmp/									&&	\
 
 RUN	cd /tmp										&&  \
 	tar xzf nginx-${NGINX_VERSION}.tar.gz               &&  \
-	tar xjf jemalloc-${JEMALLOC_VER}.tar.bz2               &&  \
 	cd nginx-${NGINX_VERSION}							&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
