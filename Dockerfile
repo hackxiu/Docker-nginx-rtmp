@@ -36,8 +36,7 @@ RUN	apk update		&&	\
 
 RUN	cd /tmp/									&&	\
 	curl -s --remote-name https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz			&&	\
-	curl -s --remote-name https://github.com/arut/nginx-rtmp-module/archive/v${NGINX_RTMP_VERSION}.tar.gz
-	#git clone https://github.com/arut/nginx-rtmp-module.git -b v${NGINX_RTMP_VERSION}
+	git clone https://github.com/winshining/nginx-http-flv-module.git -b v${NGINX_RTMP_VERSION}
 
 RUN	cd /tmp										&&  \
 	tar xzf nginx-${NGINX_VERSION}.tar.gz               &&  \
@@ -46,8 +45,8 @@ RUN	cd /tmp										&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
-		--add-module=../nginx-rtmp-module-${NGINX_RTMP_VERSION}                \
-		--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
+		--add-module=../nginx-http-flv-module            &&  \
+		#--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
 	make										&&  \
 	make install              
 FROM alpine:latest
@@ -63,7 +62,7 @@ COPY --from=0 /tmp/nginx-rtmp-module/stat.xsl /opt/nginx/conf/stat.xsl
 RUN rm -rf /opt/nginx/conf/nginx.conf               &&  \
 	cd .. \                                     &&  \
 	rm -rf /tmp/nginx-${NGINX_VERSION}               &&  \
-	rm -rf /tmp/nginx-rtmp-module-1.2.1     
+	rm -rf /tmp/nginx-http-flv-module     
 ADD run.sh /
 
 EXPOSE 1935
