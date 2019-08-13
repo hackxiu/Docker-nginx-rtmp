@@ -49,6 +49,7 @@ RUN	cd /tmp										&&  \
 	make										&&  \
 	make install                                &&  \
 	rm -rf nginx-${NGINX_VERSION}               &&  \
+	cd .. \                                     &&  \
 	rm -rf nginx-rtmp-module                    
 FROM alpine:latest
 RUN apk update		&& \
