@@ -40,7 +40,7 @@ RUN	cd /tmp/									&&	\
 
 RUN	cd /tmp										&&  \
 	tar xzf nginx-${NGINX_VERSION}.tar.gz               &&  \
-	tar xzf nginx-module-rtmp-${NGINX_RTMP_VERSION}.tar.gz                    &&  \
+	#tar xzf nginx-module-rtmp-${NGINX_RTMP_VERSION}.tar.gz                    &&  \
 	cd nginx-${NGINX_VERSION}							&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
