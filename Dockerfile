@@ -36,7 +36,7 @@ RUN	apk update		&&	\
 
 RUN	cd /tmp/									&&	\
 	curl -s --remote-name https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz			&&	\
-	curl -s --remote-name -o nginx-module-rtmp.tar.gz https://github.com/arut/nginx-rtmp-module/archive/v${NGINX_RTMP_VERSION}.tar.gz
+	curl -L -s --remote-name -o nginx-module-rtmp.tar.gz https://github.com/arut/nginx-rtmp-module/archive/v${NGINX_RTMP_VERSION}.tar.gz
 	#git clone https://github.com/arut/nginx-rtmp-module.git -b v${NGINX_RTMP_VERSION}
 
 RUN	cd /tmp										&&  \
