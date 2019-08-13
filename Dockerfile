@@ -48,7 +48,6 @@ RUN	cd /tmp										&&  \
 		--add-module=../nginx-rtmp-module                \
 	make										&&	\
 	make install                                &&	\
-	cd jemalloc-${JEMALLOC_VER}                 &&	\
 FROM alpine:latest
 RUN apk update		&& \
 	apk add			   \
