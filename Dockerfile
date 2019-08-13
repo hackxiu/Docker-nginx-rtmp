@@ -44,8 +44,8 @@ RUN	cd /tmp										&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
-		--add-module=../nginx-rtmp-module                \
-	make										&&	\
+		--add-module=../nginx-rtmp-module                &&  \
+	make										&&  \
 	make install
 FROM alpine:latest
 RUN apk update		&& \
