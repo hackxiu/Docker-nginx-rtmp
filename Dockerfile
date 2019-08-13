@@ -1,7 +1,7 @@
 FROM alpine:latest as builder
 MAINTAINER HackXiu <hakkxiu@gmail.com>
 
-ARG NGINX_VERSION=1.15.3
+ARG NGINX_VERSION=1.16.0
 ARG NGINX_RTMP_VERSION=1.2.1
 
 RUN	apk update		&&	\
@@ -46,7 +46,7 @@ RUN	cd /tmp										&&  \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
 		--add-module=../nginx-rtmp-module               &&  \
-		#--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
+		--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
 	make										&&  \
 	make install              
 FROM alpine:latest
