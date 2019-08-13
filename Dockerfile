@@ -36,10 +36,12 @@ RUN	apk update		&&	\
 
 RUN	cd /tmp/									&&	\
 	curl -s --remote-name https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz			&&	\
-	git clone https://github.com/arut/nginx-rtmp-module.git -b v${NGINX_RTMP_VERSION}
+	curl -L https://github.com/arut/nginx-rtmp-module/archive/v${NGINX_RTMP_VERSION}.tar.gz > nginx-module-rtmp.tar.gz
+	#git clone https://github.com/arut/nginx-rtmp-module.git -b v${NGINX_RTMP_VERSION}
 
 RUN	cd /tmp										&&  \
 	tar xzf nginx-${NGINX_VERSION}.tar.gz               &&  \
+	tar xfz nginx-module-rtmp.tar.gz                    &&  \
 	cd nginx-${NGINX_VERSION}							&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
@@ -61,7 +63,7 @@ COPY --from=0 /tmp/nginx-rtmp-module/stat.xsl /opt/nginx/conf/stat.xsl
 RUN rm -rf /opt/nginx/conf/nginx.conf               &&  \
 	cd .. \                                     &&  \
 	rm -rf nginx-${NGINX_VERSION}               &&  \
-	rm -rf nginx-rtmp-module     
+	rm -rf nginx-rtmp-module-1.2.1     
 ADD run.sh /
 
 EXPOSE 1935
