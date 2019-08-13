@@ -44,9 +44,12 @@ RUN	cd /tmp										&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
-		--add-module=../nginx-rtmp-module                &&  \
+		--add-module=../nginx-rtmp-module                \
+		--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
 	make										&&  \
-	make install
+	make install                                &&  \
+	rm -rf nginx-${NGINX_VERSION}               &&  \
+	rm -rf nginx-rtmp-module                    
 FROM alpine:latest
 RUN apk update		&& \
 	apk add			   \
