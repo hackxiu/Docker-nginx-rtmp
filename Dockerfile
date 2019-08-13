@@ -46,7 +46,7 @@ RUN	cd /tmp										&&  \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
 		--add-module=../nginx-http-flv-module            &&  \
-		#--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
+		--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
 	make										&&  \
 	make install              
 FROM alpine:latest
