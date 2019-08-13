@@ -47,10 +47,7 @@ RUN	cd /tmp										&&  \
 		--add-module=../nginx-rtmp-module                \
 		--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
 	make										&&  \
-	make install                                &&  \
-	cd .. \                                     &&  \
-	rm -rf nginx-${NGINX_VERSION}               &&  \
-	rm -rf nginx-rtmp-module                    
+	make install              
 FROM alpine:latest
 RUN apk update		&& \
 	apk add			   \
@@ -61,7 +58,10 @@ RUN apk update		&& \
 
 COPY --from=0 /opt/nginx /opt/nginx
 COPY --from=0 /tmp/nginx-rtmp-module/stat.xsl /opt/nginx/conf/stat.xsl
-RUN rm /opt/nginx/conf/nginx.conf
+RUN rm -rf /opt/nginx/conf/nginx.conf               &&  \
+	cd .. \                                     &&  \
+	rm -rf nginx-${NGINX_VERSION}               &&  \
+	rm -rf nginx-rtmp-module     
 ADD run.sh /
 
 EXPOSE 1935
