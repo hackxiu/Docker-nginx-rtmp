@@ -51,7 +51,6 @@ Play Path/Stream Key: mystream
 ## Watching the steam
 
 In your favorite RTMP video player connect to the stream using the URL:
-http://example.com:8080/live?port=1935&app=myapp&stream=mystream
 rtmp://&lt;your server ip&gt;/live/mystream
 http://&lt;your server ip&gt;/hls/mystream.m3u8
 
