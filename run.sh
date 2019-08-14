@@ -63,6 +63,9 @@ http {
         }
     }
 }
+
+rtmp_auto_push on;
+rtmp_auto_push_reconnect 1s;
         
 !EOF
 
@@ -70,6 +73,11 @@ http {
 ## RTMP Config
 cat >>${NGINX_CONFIG_FILE} <<!EOF
 rtmp {
+    ut_queue           4096;
+    out_cork            8;
+    max_streams         128;
+    timeout             15s;
+    drop_idle_publisher 15s;
     server {
         listen 1935;
         chunk_size 4096;
@@ -90,6 +98,7 @@ echo Creating stream $STREAM_NAME
 cat >>${NGINX_CONFIG_FILE} <<!EOF
         application ${STREAM_NAME} {
             live on;
+            gop_cache on;
             record off;
             on_publish http://localhost:8080/on_publish;
 !EOF
