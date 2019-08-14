@@ -2,15 +2,15 @@ FROM alpine:latest as builder
 MAINTAINER HackXiu <hakkxiu@gmail.com>
 
 ARG NGINX_VERSION=1.16.0
-ARG NGINX_RTMP_VERSION=1.2.1
+ARG NGINX_RTMP_VERSION=1.2.6
 
 RUN	apk update		&&	\
 	apk add				\
-		git			\
-		gcc			\
+		git			    \
+		gcc			    \
 		binutils		\
-		gmp			\
-		isl			\
+		gmp			    \
+		isl			    \
 		libgomp			\
 		libatomic		\
 		libgcc			\
@@ -36,7 +36,7 @@ RUN	apk update		&&	\
 
 RUN	cd /tmp/									&&	\
 	curl -s --remote-name https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz			&&	\
-	git clone https://github.com/arut/nginx-rtmp-module.git -b v${NGINX_RTMP_VERSION}
+	git clone https://github.com/winshining/nginx-http-flv-module.git -b v${NGINX_RTMP_VERSION}
 
 RUN	cd /tmp										&&  \
 	tar xzf nginx-${NGINX_VERSION}.tar.gz               &&  \
@@ -45,7 +45,7 @@ RUN	cd /tmp										&&  \
 	./configure                                          \
 		--prefix=/opt/nginx                              \
 		--with-http_ssl_module                           \
-		--add-module=../nginx-rtmp-module                \
+		--add-module=../nginx-http-flv-module                \
 		--with-cc-opt="-Wimplicit-fallthrough=0"        &&  \
 	make										&&  \
 	make install              
@@ -58,11 +58,11 @@ RUN apk update		&& \
 		pcre
 
 COPY --from=0 /opt/nginx /opt/nginx
-COPY --from=0 /tmp/nginx-rtmp-module/stat.xsl /opt/nginx/conf/stat.xsl
+COPY --from=0 /tmp/nginx-http-flv-module/stat.xsl /opt/nginx/conf/stat.xsl
 RUN rm -rf /opt/nginx/conf/nginx.conf               &&  \
 	cd .. \                                         &&  \
 	rm -rf /tmp/nginx-${NGINX_VERSION}              &&  \
-	rm -rf /tmp/nginx-rtmp-module    
+	rm -rf /tmp/nginx-http-flv-module    
 ADD run.sh /
 
 EXPOSE 1935
