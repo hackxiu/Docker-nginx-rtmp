@@ -73,11 +73,6 @@ rtmp_auto_push_reconnect 1s;
 ## RTMP Config
 cat >>${NGINX_CONFIG_FILE} <<!EOF
 rtmp {
-    ut_queue           4096;
-    out_cork            8;
-    max_streams         128;
-    timeout             15s;
-    drop_idle_publisher 15s;
     server {
         listen 1935;
         chunk_size 4096;
