@@ -66,6 +66,7 @@ http {
 
 rtmp_auto_push on;
 rtmp_auto_push_reconnect 1s;
+rtmp_socket_dir /tmp;
         
 !EOF
 
