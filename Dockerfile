@@ -6,7 +6,6 @@ ARG NGINX_RTMP_VERSION=1.2.6
 
 RUN	apk update		&&	\
 	apk add				\
-	    bash            \
 		git			    \
 		gcc			    \
 		binutils		\
