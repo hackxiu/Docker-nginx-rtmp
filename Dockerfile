@@ -2,7 +2,7 @@ FROM alpine:latest as builder
 MAINTAINER HackXiu <hakkxiu@gmail.com>
 
 ARG NGINX_VERSION=1.16.1
-ARG NGINX_RTMP_VERSION=1.2.6
+ARG NGINX_RTMP_VERSION=1.2.7
 
 RUN	apk update		&&	\
 	apk add				\
